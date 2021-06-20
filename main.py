@@ -4,13 +4,7 @@ import urllib.error
 import re
 import json
 
-while True:
-    num=input("Problem num:")
-    if(num=='-1'): break
-    cid=input("Contest id:")
-    if(cid=='-1'): url = "http://218.5.5.242:9018/JudgeOnline/problem.php?id=" +num
-    else: url = "http://218.5.5.242:9018/JudgeOnline/problem.php?cid="+cid+"&pid=" +num
-
+def parse(url):
     header = {
         "User-Agent":"Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
     }
@@ -93,4 +87,20 @@ while True:
             ur.urlopen(req)
     except:
         print('end')
+
+while True:
+    cid=input("Contest id(-1代表无或退出):")
+    if(cid=='-1'):
+        num=input("Problem num(-1退出):")
+        if(num=='-1'): break
+        url = "http://218.5.5.242:9018/JudgeOnline/problem.php?id=" +num
+        parse(url)
+    else:
+        frm=input('from:')
+        end=input('to:')
+        for i in range(int(frm),int(end)+1):
+            url = "http://218.5.5.242:9018/JudgeOnline/problem.php?cid="+cid+"&pid=" +str(i)
+            parse(url)
+
+    
 
