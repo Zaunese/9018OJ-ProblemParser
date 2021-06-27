@@ -1,6 +1,6 @@
 # 9018OJ-ProblemParser
 
-It is like [Competitive Companion](/jmerle/competitive-companion)
+It is like [Competitive Companion](../../jmerle/competitive-companion)
 
 Now we supported contest.
 
