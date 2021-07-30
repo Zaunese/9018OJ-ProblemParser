@@ -10,8 +10,6 @@ def parse(url):
     }
     request=ur.Request(url,headers=header)
     reponse=ur.urlopen(request).read()
-    with open("jfaojif.html","wb") as f:
-        f.write(reponse)
 
     reponse=reponse.decode()
 
@@ -75,18 +73,15 @@ def parse(url):
     print(exportData)
     exportData=json.dumps(exportData).encode()
 
-    try:
-        for port in defaultPorts:
+    for port in defaultPorts:
+        try:
             url="http://localhost:"+str(port)
-            headers={
-                "Content-Type": "application/json"
-            }
 
             req=ur.Request(url,exportData)
             req.add_header("Content-Type","application/json")
             ur.urlopen(req)
-    except:
-        print('end')
+        except:
+            print('end')
 
 while True:
     cid=input("Contest id(-1代表无或退出):")
