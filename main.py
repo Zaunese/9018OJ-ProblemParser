@@ -1,17 +1,34 @@
 import urllib.request as ur
 import urllib.parse as up
-import urllib.error
-import re
+import requests
+import _thread as t
 import json
 
+def post(exportData,port):
+    try:
+        url="http://localhost:"+str(port)
+
+        req=ur.Request(url,exportData)
+        req.add_header("Content-Type","application/json")
+        ur.urlopen(req)
+    except:
+        print('end')
+
 def parse(url):
+    print(url)
+
     header = {
         "User-Agent":"Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
     }
+#    '''
     request=ur.Request(url,headers=header)
     reponse=ur.urlopen(request).read()
 
     reponse=reponse.decode()
+    '''
+
+    reponse=requests.get(url,headers=header).text
+    '''
 
     a=reponse.find("</title>")+8
     a=reponse.find("<center>",a)+8
@@ -74,14 +91,7 @@ def parse(url):
     exportData=json.dumps(exportData).encode()
 
     for port in defaultPorts:
-        try:
-            url="http://localhost:"+str(port)
-
-            req=ur.Request(url,exportData)
-            req.add_header("Content-Type","application/json")
-            ur.urlopen(req)
-        except:
-            print('end')
+        t.start_new_thread(post,(exportData,port))
 
 while True:
     cid=input("Contest id(-1代表无或退出):")
